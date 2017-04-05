@@ -162,15 +162,20 @@ import pickle
 from corpustools.corpus.classes import Segment
 
 # Load the corpus
-corpus_path="lemurian.corpus"
+corpus_path = "lemurian.corpus"
 with open(corpus_path, 'rb') as file:
     corpus_in = pickle.load(file)
 
-#Informativity of a single segment 
+# Corpus information
+print("Corpus: ", corpus_in.name)
 print("Segments in the lemurian corpus: ", [seg for seg in corpus_in.inventory], "\n")
+
+# Informativity of a single segment
+print("Informativity for one segment:")
 print(get_informativity(corpus_in, Segment("m"), rounding=3), "\n")
 
-#Informativity for all segments in inventory
+# Informativity for all segments in inventory
+print("Informativity for all segments in inventory:")
 output = all_informativity(corpus_in, rounding=4)
 for s in sorted(output.keys()):
     print(s, output[s])
