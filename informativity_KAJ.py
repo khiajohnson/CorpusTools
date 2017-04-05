@@ -116,8 +116,7 @@ def get_informativity(corpus_context, segment, rounding=3):
     s_frs = segment_in_context_frequencies(segment, corpus_context)
     c_frs = context_frequencies(s_frs, corpus_context)
     c_prs = conditional_probability(s_frs, c_frs)
-    informativity = round(-(sum([(s_frs[c]) * log2(c_prs[c]) for c in c_prs])) / sum([(s_frs[s]) for s in s_frs]),
-                          rounding)
+    informativity = round(-(sum([(s_frs[c]) * log2(c_prs[c]) for c in c_prs])) / sum([(s_frs[s]) for s in s_frs]), rounding)
 
     summary = {
         "Corpus": corpus_context.name,
@@ -167,9 +166,11 @@ corpus_path="lemurian.corpus"
 with open(corpus_path, 'rb') as file:
     corpus_in = pickle.load(file)
 
+#Informativity of a single segment 
 print("Segments in the lemurian corpus: ", [seg for seg in corpus_in.inventory], "\n")
 print(get_informativity(corpus_in, Segment("m"), rounding=3), "\n")
 
+#Informativity for all segments in inventory
 output = all_informativity(corpus_in, rounding=4)
-for s in output:
+for s in sorted(output.keys()):
     print(s, output[s])
